@@ -1,0 +1,104 @@
+<html>
+<head>
+<script src="generator.js"></script>
+</head>
+<body>
+<h3>Names generator</h3>
+<div>This names generator was made by Airapport for <a href="https://www.airapport.com/2021/10/conquicktory-our-minimalistic-turn.html">Conquicktory</a> strategy game. Look what countries names it produces</div>
+<a href="https://lh3.googleusercontent.com/-hI27EwXGrnk/YWRxpC9iEnI/AAAAAAAAAz0/xSiic894xlcSgDfwbfuxpYaf55O078dTACNcBGAsYHQ/s16000/screenshotConquicktoryEnNames.png" style="margin-left: 1em; margin-right: 1em;" target="_blank"><img alt="" height="181" src="https://lh3.googleusercontent.com/-hI27EwXGrnk/YWRxpC9iEnI/AAAAAAAAAz0/xSiic894xlcSgDfwbfuxpYaf55O078dTACNcBGAsYHQ/w320-h181/screenshotConquicktoryEnNames.png" width="320" /></a>
+<div> It's work is based on Markov's chains. The generator defines the probalilities of symbols combinations in the samples, and generates new names using the rules found.</div>
+
+<div>Feel free to play with the generator and generate some names for your RPG, strategy or other game. Here's what you should do for this:
+<ol>
+<li>Paste learning samples to the"samples" field (you can the buse some sample samples :) )</li>
+<li>Press"Generate" button</li>
+<li>Get a list of generated names and use them as you like :)</li>
+</ol>
+</div>
+
+<div>
+You can also integrate the whole class MarkovGenerator from the <a href="generator.js">generator.js</a> into your own game. If you want to do this, please, mention Airapport in your game's Credits.
+</div>
+<div>
+<input type="button" id="samplebtn1" value="Japan provinces">
+<input type="button" id="samplebtn2" value="European countries and regions">
+<input type="button" id="samplebtn3" value="US Cities">
+<input type="button" id="samplebtn4" value="Russian Names (Cyr)">
+</div>
+<div>
+<textarea id="samples" rows="5" cols="80""wrap"="off" placeholder="Insert learning sample here"></textarea>
+</div>
+<div>
+<input type="button" id="btn1" value="Generate!">
+</div>
+<div>
+<textarea id="results" rows="20" cols="80""wrap"="off"></textarea>
+</div>
+<script type="text/javascript">
+	function generate(){
+		var strsField = document.getElementById("samples");
+		var lines = strsField.value.replace(/\r\n/g,"\n").split("\n");
+		var gen = new MarkovGenerator();
+		gen.init(lines)
+		
+		var str ="";
+		var num = 20;
+		for (var i=0; i<num; i++){
+			str+=gen.generate();
+			if (i<num-1){
+				str+="\n"
+			}
+		}
+		var resFielfd = document.getElementById("results");
+		resFielfd.value=str;
+	}
+	
+	var btn = document.getElementById("btn1");
+	btn.onclick = generate
+	
+	var btn2 = document.getElementById("samplebtn1");
+	btn2.onclick = seedJapanRegs
+	var btn3 = document.getElementById("samplebtn2");
+	btn3.onclick = seedEurope
+	var btn4 = document.getElementById("samplebtn3");
+	btn4.onclick = seedUSCities
+	var btn5 = document.getElementById("samplebtn4");
+	btn5.onclick = seedCyrNames
+	
+	
+	var seededData={
+		JapanRegs:["Hokkaidō","Tōhoku","Akita","Aomori","Fukushima","Iwate","Miyagi","Yamagata","Kantō","Chiba","Gunma","Ibaraki","Kanagawa","Saitama","Tochigi","Tōkyō","Chūbu","Aichi","Fukui","Gifu","Ishikawa","Nagano","Niigata","Shizuoka","Toyama","Yamanashi","Kansai","Kinki","Hyōgo","Kyōto","Mie","Nara","Ōsaka","Shiga","Wakayama","Chūgoku","Hiroshima","Okayama","Shimane","Tottori","Yamaguchi","Shikoku","Ehime","Kagawa","Kōchi","Tokushima","Kyūshū","Fukuoka","Kagoshima","Kumamoto,","Miyazaki","Nagasaki","Ōita","Okinawa","Saga"],
+		Europe:["Austria","Belgium","Great Britain","Germany","Ireland","Liechtenstein","Luxembourg","Monaco","Netherlands","France","Switzerland","Belarus","Bulgaria","Hungary","Moldova","Poland","Russia","Romania","Slovakia","Ukraine","Czech","Denmark","Iceland","Norway","Latvia","Lithuania","Finland","Sweden","Estonia","Albania","Andorra","Bosnia","Herzegovina","Vatican","Greece","Spain","Italy","Malta","Portugal","San Marino","North Macedonia","Serbia","Slovenia","Croatia","Montenegro","Kazakhstan","Turkey","Azerbaijan","Georgia","Armenia","Cyprus","Aland","Guernsey","Gibraltar","Jersey","Maine","Faroe Islands","Spitsbergen","Scotland","Wales","England","Transylvania","Sicily","Sardinia","Lusitania","Iberia","Andalusia","Aquitaine","Pannonia","Dacia","Thrace","Gaul","Castile","Leon","Aragon","Navarre","Gascogne","Languedoc","Catalonia","Brittany","Burgundy","Normandy","Champagne","Provence","Helvetia","Bologna","Venice","Flanders","Wallonia","Bavaria","Baden","Württemberg","Prussia","Saxony","Anhalt","Holstein","Schleswig","Pomerania","Silesia","Ruthenia","Mazovia","Transylvania","Wallachia","Yugoslavia","Dalmatia","Illyria","Skone","Ostrobothnia","Ingria","Livonia","Brandenburg","Mecklenburg"],
+		USCities:["New York","Los Angeles","Chicago","Houston","Phoenix","Philadelphia","San Antonio","San Diego","Dallas","San Jose","Austin","Jacksonville","Fort Worth","Columbus","Indianapolis","Charlotte","San Francisco","Seattle","Denver","Washington","Nashville","Oklahoma City","El Paso","Boston","Portland","Las Vegas","Detroit","Memphis","Louisville","Baltimore","Milwaukee","Albuquerque","Tucson","Fresno","Sacramento","Kansas City","Mesa","Atlanta","Omaha","Colorado Springs","Raleigh","Long Beach","Virginia Beach","Miami","Oakland","Minneapolis","Tulsa","Bakersfield","Wichita","Arlington","Aurora","Tampa","New Orleans","Cleveland","Honolulu","Anaheim","Lexington","Stockton","Corpus Christi","Henderson","Riverside","Newark","Saint Paul","Santa Ana","Cincinnati","Irvine","Orlando","Pittsburgh","St. Louis","Greensboro","Jersey City","Anchorage","Lincoln","Plano","Durham","Buffalo","Chandler","Chula Vista","Toledo","Madison","Gilbert","Reno","Fort Wayne","North Las Vegas","St. Petersburg","Lubbock","Irving","Laredo","Winston–Salem","Chesapeake","Glendale","Garland","Scottsdale","Norfolk","Boise","Fremont","Spokane","Santa Clarita","Baton Rouge","Richmond","Hialeah","San Bernardino","Tacoma","Modesto","Huntsville","Des Moines","Yonkers","Rochester","Moreno Valley","Fayetteville","Fontana","Columbus","Worcester","Port St. Lucie","Little Rock","Augusta","Oxnard","Birmingham","Montgomery","Frisco","Amarillo","Salt Lake City","Grand Rapids","Huntington Beach","Overland Park","Glendale","Tallahassee","Grand Prairie","McKinney","Cape Coral","Sioux Falls","Peoria","Providence","Vancouver","Knoxville","Akron","Shreveport","Mobile","Brownsville","Newport News","Fort Lauderdale","Chattanooga","Tempe","Aurora","Santa Rosa","Eugene","Elk Grove","Salem","Ontario","Cary","Rancho Cucamonga","Oceanside","Lancaster","Garden Grove","Pembroke Pines","Fort Collins","Palmdale","Springfield","Clarksville","Salinas","Hayward","Paterson","Alexandria","Macon","Corona","Kansas City","Lakewood","Springfield","Sunnyvale","Jackson","Killeen","Hollywood","Murfreesboro","Pasadena","Bellevue","Pomona","Escondido","Joliet","Charleston","Mesquite","Naperville","Rockford","Bridgeport","Syracuse","Savannah","Roseville","Torrance","Fullerton","Surprise","McAllen","Thornton","Visalia","Olathe","Gainesville","West Valley City","Orange","Denton","Warren","Pasadena","Waco","Cedar Rapids","Dayton","Elizabeth","Hampton","Columbia","Kent","Stamford","Lakewood","Victorville","Miramar","Coral Springs","Sterling Heights","New Haven","Carrollton","Midland","Norman","Santa Clara","Athens","Thousand Oaks","Topeka","Simi Valley","Columbia","Vallejo","Fargo","Allentown","Pearland","Concord","Abilene","Arvada","Berkeley","Ann Arbor","Independence","Rochester","Lafayette","Hartford","College Station","Clovis","Fairfield","Palm Bay","Richardson","Round Rock","Cambridge","Meridian","West Palm Beach","Evansville","Clearwater","Billings","West Jordan","Richmond","Westminster","Manchester","Lowell","Wilmington","Antioch","Beaumont","Provo","North Charleston","Elgin","Carlsbad","Odessa","Waterbury","Springfield","League City","Downey","Gresham","High Point","Broken Arrow","Peoria","Lansing","Lakeland","Pompano Beach","Costa Mesa","Pueblo","Lewisville","Miami Gardens","Las Cruces","Sugar Land","Murrieta","Ventura","Everett","Temecula","Dearborn","Santa Maria","West Covina","El Monte","Greeley","Sparks","Centennial","Boulder","Sandy Springs","Inglewood","Edison","South Fulton","Green Bay","Burbank","Renton","Hillsboro","El Cajon","Tyler","Davie","San Mateo","Brockton","Concord","Jurupa Valley","Daly City","Allen","Rio Rancho","Rialto","Woodbridge","South Bend","Spokane Valley","Norwalk","Menifee","Vacaville","Wichita Falls","Davenport","Quincy","Chico","Lynn","Lee's Summit","New Bedford","Federal Way","Clinton","Edinburg","Nampa","Roanoke"],
+		CyrNames:["Анастасия","Анна","Мария","Елена","Дарья","Алина","Ирина","Екатерина","Арина","Полина","Ольга","Юлия","Татьяна","Наталья","Виктория","Елизавета","Ксения","Милана","Вероника","Алиса","Валерия","Александра","Ульяна","Кристина","София","Марина","Светлана","Варвара","Софья","Диана","Яна","Кира","Ангелина","Маргарита","Ева","Алёна","Дарина","Карина","Василиса","Олеся","Аделина","Оксана","Таисия","Надежда","Евгения","Элина","Злата","Есения","Милена","Вера","Мирослава","Галина","Людмила","Валентина","Нина","Эмилия","Камилла","Альбина","Лилия","Любовь","Лариса","Эвелина","Инна","Агата","Амелия","Амина","Эльвира","Ярослава","Стефания","Регина","Алла","Виолетта","Лидия","Амалия","Наталия","Марьяна","Анжелика","Нелли","Влада","Виталина","Майя","Тамара","Мелания","Лиана","Василина","Зарина","Алия","Владислава","Самира","Антонина","Ника","Мадина","Наташа","Каролина","Снежана","Юлиана","Ариана","Эльмира","Ясмина","Жанна",
+	"Александр","Дмитрий","Максим","Сергей","Андрей","Алексей","Артём","Илья","Кирилл","Михаил","Никита","Матвей","Роман","Егор","Арсений","Иван","Денис","Евгений","Даниил","Тимофей","Владислав","Игорь","Владимир","Павел","Руслан","Марк","Константин","Тимур","Олег","Ярослав","Антон","Николай","Глеб","Данил","Савелий","Вадим","Степан","Юрий","Богдан","Артур","Семен","Макар","Лев","Виктор","Елисей","Виталий","Вячеслав","Захар","Мирон","Дамир","Георгий","Давид","Платон","Анатолий","Григорий","Демид","Данила","Станислав","Василий","Федор","Родион","Леонид","Одиссей","Валерий","Святослав","Борис","Эдуард","Марат","Герман","Даниэль","Петр","Амир","Всеволод","Мирослав","Гордей","Артемий","Эмиль","Назар","Савва","Ян","Рустам","Игнат","Влад","Альберт","Тамерлан","Айдар","Роберт","Адель","Марсель","Ильдар","Самир","Тихон","Рамиль","Ринат","Радмир","Филипп","Арсен","Ростислав","Святогор","Яромир"]
+	}
+	
+	
+	function seedJapanRegs(){
+		seedData2Field(seededData["JapanRegs"]);
+	}
+	function seedEurope(){
+		seedData2Field(seededData["Europe"]);
+	}
+	function seedUSCities(){
+		seedData2Field(seededData["USCities"]);
+	}
+	function seedCyrNames(){
+		seedData2Field(seededData["CyrNames"]);
+	}
+	
+	function seedData2Field(ar){
+		var str="";
+		for (var i=0; i<ar.length; i++){
+			str+=ar[i];
+			if (i<ar.length-1){
+				str+="\n"
+			}
+		}
+		var strsField = document.getElementById("samples");
+		strsField.value=str;	
+	}
+</script>
+</body>
+</html>
